@@ -1,11 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-if [ -f .gitignore ]; then
-  echo ".gitignore already exists"
-  exit 0;
-fi
-
 if [ -z $1 ]; then
   LIST=$(curl -sL https://toptal.com/developers/gitignore/api/list\?format=json -o - | jq -r '. | keys[]' | fzf -m | xargs | tr ' ' ',');
 else
@@ -20,6 +15,6 @@ fi
 
 echo "Fetching .gitignore for $LIST"
 
-curl -sL https://toptal.com/developers/gitignore/api/$LIST -o .gitignore
+curl -sL https://toptal.com/developers/gitignore/api/$LIST >> .gitignore
 
 echo "Done."
